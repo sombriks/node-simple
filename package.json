@@ -1,0 +1,23 @@
+{
+  "name": "simple-roadmap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.mjs",
+    "dev": "nodemon index.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/bodyparser": "^5.0.0",
+    "@koa/router": "^12.0.0",
+    "koa": "^2.14.2",
+    "level": "^8.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
