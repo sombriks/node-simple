@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive app",
+    "test:coverage": "c8 npm run test",
     "start": "node index.mjs",
     "dev": "nodemon index.mjs"
   },
@@ -18,6 +19,11 @@
     "level": "^8.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "c8": "^8.0.1",
+    "chai": "^4.3.10",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.1",
+    "sinon-chai": "^3.7.0"
   }
 }

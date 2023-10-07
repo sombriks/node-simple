@@ -46,7 +46,7 @@ And run wih `npm start`.
 
 Koa is highly modular and there is a dedicated plugin to porper manage routes on it.
 
-Intsall [koa-router](https://github.com/koajs/router):
+Install [koa-router](https://github.com/koajs/router):
 
 ```bash
 npm i @koa/router
@@ -73,8 +73,8 @@ Kill previous `npm start` and re-run it to see new `http://localhost:3000/status
 
 ## adding simple database for a todo list
 
-install [level](https://github.com/Level/level)
-install [bodyparser](https://github.com/koajs/bodyparser)
+Install [level](https://github.com/Level/level)
+Install [bodyparser](https://github.com/koajs/bodyparser)
 
 ```bash
 npm i level
@@ -123,7 +123,7 @@ Check if it was properly saved visiting `http://localhost:3000/todos`
 
 ## add nodemon for better DX
 
-Install [nodemon](https://nodemon.io/) so you don't need to kill and restart everytime:
+Install [nodemon](https://nodemon.io/) so you don't need to kill and restart every time:
 
 ```bash
 npm i -D nodemon
@@ -206,7 +206,9 @@ We'll dismantle our single file project into this opinionated folder structure s
 
 ### Why app folder instead of src folder
 
-Use `src` whenever you have any compilation step for your code -- typescript for example. use `app` folder if it is meant to run the way it is.
+Use `src` whenever you have any compilation step for your code -- typescript for example.
+
+Use `app` folder if it is meant to run the way it is.
 
 ### app/config/db.mjs
 
@@ -328,8 +330,152 @@ We now have what people call _separation of concerns_.
 
 ## Adding some tests
 
+Install [mocha](https://mochajs.org/)
+Install [chai](https://www.chaijs.com/)
+
+```bash
+npm i -D mocha chai
+```
+
+Create a test spec (`app/service/todoService.spec.mjs`):
+
+```javascript
+import * as service from "./todoService.mjs"
+
+import chai, {expect} from "chai"
+
+chai.should()
+
+describe("simple unit test suite", () => {
+
+  const message = `message ${new Date().getTime()}`
+  const messageUpdated = `message ${new Date().getTime()} updated`
+
+  let key = -1
+
+  it("should create a todo", async () => {
+    const result = await service.insertTodoService({ message })
+    result.message.should.be.eql(message)
+    key = result.key
+  })
+
+  it("should list a todo", async () => {
+    const result = await service.listTodoService()
+    result.should.be.an('Array')
+  })
+
+  it("should find a todo", async () => {
+    const result = await service.findTodoService(key)
+    result.should.be.an('Object')
+    result.key.should.be.eql(key)
+  })
+
+  it("should update a todo", async () => {
+    const result = await service.updateTodoService({ key, messageUpdated })
+    result.should.be.an('Object')
+    result.key.should.be.eql(key)
+  })
+
+  it("should delete a todo", async () => {
+    const result = await service.delTodoService(key)
+    expect(result).to.be.undefined
+  })
+})
+```
+
+Then modify your test script on `package.json`:
+
+```json
+//...
+"scripts" {
+  "test": "mocha --recursive app",
+  "start": "node index.mjs",
+  "dev": "nodemon index.mjs"
+}
+//...
+```
+
+Call the tests either with `npm run test` or with `npx mocha --recursive app`.
+
+Tests are good because having them passing means that the code is supposed to be doing what it should do.
+
 ## Adding coverage
 
+Install [c8](https://github.com/bcoe/c8)
+
+```bash
+npm i -D c8
+```
+
+Then add a test:coverage script on `package.json`:
+
+```json
+//...
+"scripts" {
+  "test": "mocha --recursive app",
+  "test:coverage": "c8 npm run test",
+  "start": "node index.mjs",
+  "dev": "nodemon index.mjs"
+}
+//...
+``` 
+
+And run it:
+
+
+```bash
+npm run test:coverage
+```
+
+This is the sample output:
+
+```bash
+> simple-roadmap@1.0.0 test:coverage
+> c8 npm run test
+
+
+> simple-roadmap@1.0.0 test
+> mocha --recursive app
+
+
+
+  simple unit test suite
+    ✔ should create a todo
+    ✔ should list a todo
+    ✔ should find a todo
+    ✔ should update a todo
+    ✔ should delete a todo
+
+
+  5 passing (8ms)
+
+-----------------------|---------|----------|---------|---------|-------------------------------
+File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s             
+-----------------------|---------|----------|---------|---------|-------------------------------
+All files              |   87.39 |      100 |      50 |   87.39 |                               
+ app                   |     100 |      100 |     100 |     100 |                               
+  main.mjs             |     100 |      100 |     100 |     100 |                               
+ app/config            |     100 |      100 |     100 |     100 |                               
+  db.mjs               |     100 |      100 |     100 |     100 |                               
+ app/controller        |   53.12 |      100 |       0 |   53.12 |                               
+  todoRequests.mjs     |   53.12 |      100 |       0 |   53.12 | 10-11,14-16,19-21,24-27,30-32 
+ app/service           |     100 |      100 |     100 |     100 |                               
+  todoService.mjs      |     100 |      100 |     100 |     100 |                               
+  todoService.spec.mjs |     100 |      100 |     100 |     100 |                               
+-----------------------|---------|----------|---------|---------|-------------------------------
+
+Process finished with exit code 0
+```
+
+Having tests is good, but it's coverage to explain how much we can trust the tests and the code.
+
 ## Mock some calls
+
+Install [chai-http](https://www.chaijs.com/plugins/chai-http/)
+Install [chai-sinon](https://www.chaijs.com/plugins/sinon-chai/)
+
+```bash
+npm i -D chai-http sinon-chai
+```
 
 ## Make the app aware of the environment
