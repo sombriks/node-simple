@@ -473,9 +473,69 @@ Having tests is good, but it's coverage to explain how much we can trust the tes
 
 Install [chai-http](https://www.chaijs.com/plugins/chai-http/)
 Install [chai-sinon](https://www.chaijs.com/plugins/sinon-chai/)
+Install [sinon](https://sinonjs.org/)
 
 ```bash
-npm i -D chai-http sinon-chai
+npm i -D chai-http sinon-chai sinon
 ```
+
+Create a spec file (`app/controller/todoRequests.spec.mjs`):
+
+```javascript
+import chai, {expect} from "chai"
+import chaiHttp from "chai-http"
+import sinonChai from "sinon-chai"
+import * as sinon from "sinon";
+
+import * as controller from "./todoRequests.mjs"
+import {app} from "../main.mjs"
+import {db} from "../config/db.mjs"
+
+chai.should()
+chai.use(chaiHttp)
+chai.use(sinonChai)
+
+describe("simple requests test suite", () => {
+
+  const sandbox = sinon.createSandbox();
+
+  beforeEach(function () {
+    sandbox.spy(db);
+  });
+
+  afterEach(function () {
+    sandbox.restore();
+  });
+
+  it("should return 'ONLINE' status", done => {
+    chai
+      .request(app.callback())
+      .get("/status")
+      .end((err, res) => {
+        res.text.should.be.eql('ONLINE')
+        done()
+      })
+  })
+
+  it("should list todos", (done) => {
+    chai
+      .request(app.callback())
+      .get("/todos")
+      .end((err, res) => {
+        res.body.should.be.an("Array")
+        done()
+      })
+  })
+
+  it("should insert a todo", async () => {
+    const ctx = {request: {body: {message: "hello"}}, body: ""}
+    await controller.insertTodoRequest(ctx)
+    db.put.should.have.been.calledOnce // sinon-chai in action
+  })
+})
+```
+
+Here we can see chai-http doing some integration tests and also we can see sinon
+spying on db calls.
 
 ## Make the app aware of the environment
