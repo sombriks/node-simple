@@ -46,7 +46,7 @@ And run wih `npm start`.
 
 Koa is highly modular and there is a dedicated plugin to porper manage routes on it.
 
-Install [koa-router](https://github.com/koajs/router):
+- Install [koa-router](https://github.com/koajs/router):
 
 ```bash
 npm i @koa/router
@@ -73,8 +73,8 @@ Kill previous `npm start` and re-run it to see new `http://localhost:3000/status
 
 ## adding simple database for a todo list
 
-Install [level](https://github.com/Level/level)
-Install [bodyparser](https://github.com/koajs/bodyparser)
+- Install [level](https://github.com/Level/level)
+- Install [bodyparser](https://github.com/koajs/bodyparser)
 
 ```bash
 npm i level
@@ -123,7 +123,7 @@ Check if it was properly saved visiting `http://localhost:3000/todos`
 
 ## add nodemon for better DX
 
-Install [nodemon](https://nodemon.io/) so you don't need to kill and restart every time:
+- Install [nodemon](https://nodemon.io/) so you don't need to kill and restart every time:
 
 ```bash
 npm i -D nodemon
@@ -330,8 +330,8 @@ We now have what people call _separation of concerns_.
 
 ## Adding some tests
 
-Install [mocha](https://mochajs.org/)
-Install [chai](https://www.chaijs.com/)
+- Install [mocha](https://mochajs.org/)
+- Install [chai](https://www.chaijs.com/)
 
 ```bash
 npm i -D mocha chai
@@ -401,7 +401,7 @@ Tests are good because having them passing means that the code is supposed to be
 
 ## Adding coverage
 
-Install [c8](https://github.com/bcoe/c8)
+- Install [c8](https://github.com/bcoe/c8)
 
 ```bash
 npm i -D c8
@@ -471,9 +471,9 @@ Having tests is good, but it's coverage to explain how much we can trust the tes
 
 ## Mock some calls
 
-Install [chai-http](https://www.chaijs.com/plugins/chai-http/)
-Install [chai-sinon](https://www.chaijs.com/plugins/sinon-chai/)
-Install [sinon](https://sinonjs.org/)
+- Install [chai-http](https://www.chaijs.com/plugins/chai-http/)
+- Install [chai-sinon](https://www.chaijs.com/plugins/sinon-chai/)
+- Install [sinon](https://sinonjs.org/)
 
 ```bash
 npm i -D chai-http sinon-chai sinon
@@ -535,7 +535,110 @@ describe("simple requests test suite", () => {
 })
 ```
 
-Here we can see chai-http doing some integration tests and also we can see sinon
-spying on db calls.
+Here we can see chai-http doing some integration tests, and also we can see
+sinon spying on db calls.
 
 ## Make the app aware of the environment
+
+In order to make application more configurable and flexible, we can add checks
+on environment variables, so we tweak the app behavior accordingly.
+
+We can make listening port configurable:
+
+```javascript
+// index.mjs
+import { app } from "./app/main.mjs"
+
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT)
+console.log(`http://localhost:${PORT}`)
+```
+
+If PORT environment variable is set, it will be used as listening port.
+
+If no value is set for PORT environment variable, it fallbacks to 3000.
+
+We can make database configurable:
+
+```javascript
+import { Level } from "level"
+
+const LEVELDB = process.env.LEVELDB || "sample"
+
+export const db = new Level(LEVELDB, { valueEncoding: "json" })
+console.log(`database is ${LEVELDB}`)
+```
+
+## Use .env files
+
+Once the app understands and expects some environment variables it's up to you
+to properly configure them. Depending on how many projects are present in the
+developer machine or any other external issue, it might be more tricky than it
+should be.
+
+On can make use of dot env files to proper manage such variables at development
+time.
+
+- Install [dotenv-flow](https://www.npmjs.com/package/dotenv-flow)
+
+```bash
+npm i dotenv-flow
+```
+
+Then create a file called `.env` and add your environment variables:
+
+```dotenv
+# variables needed by the application
+PORT=3000
+LEVELDB=sample
+EXTRA_CONFIG=xpto
+```
+
+Finally, you must make the application aware of those variables. To do so, you
+need to call the [`config()`](https://www.npmjs.com/package/dotenv-flow#usage)
+function at entry point, but it's invasive; instead, modify _start_ and _dev_
+scripts in `package.json` to perform dynamic loading:
+
+```json
+//...
+"scripts" {
+  "test": "mocha --recursive app",
+  "test:coverage": "c8 npm run test",
+  "start": "node -r dotenv-flow/config index.mjs",
+  "dev": "nodemon -r dotenv-flow/config index.mjs"
+}
+//...
+``` 
+
+Check if it is working with this change in `index.mjs`:
+
+```javascript
+import { app } from "./app/main.mjs"
+
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT)
+console.log(`http://localhost:${PORT}`)
+console.log(`EXTRA_CONFIG is ${process.env.EXTRA_CONFIG}`)
+```
+
+Kill nodemon process because dynamic loading occurs at startup.
+
+the output should be something like this:
+
+```
+/usr/bin/npm run dev
+
+> simple-roadmap@1.0.0 dev
+> nodemon -r dotenv-flow/config index.mjs
+
+[nodemon] 3.0.1
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node -r dotenv-flow/config index.mjs`
+database is sample
+http://localhost:3000
+EXTRA_CONFIG is xpto
+```

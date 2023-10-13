@@ -1,3 +1,6 @@
 import { Level } from "level"
 
-export const db = new Level("sample", { valueEncoding: "json" })
+const LEVELDB = process.env.LEVELDB || "sample"
+
+export const db = new Level(LEVELDB, { valueEncoding: "json" })
+console.log(`database is ${LEVELDB}`)
