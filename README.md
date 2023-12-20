@@ -17,7 +17,7 @@ mkdir simple-roadmap # create a folder
 cd simple-roadmap
 npm init -y # creates the `package.json` file, this folder is a node project now
 npm i koa
-touch index.mjs # you can use just .js extension, but adpting explicit .mjs or .cjs gives more control over module style
+touch index.mjs # you can use just .js extension, but adopting explicit .mjs or .cjs gives more control over module style
 ```
 
 This is the initial content of index.mjs:
@@ -48,7 +48,7 @@ And run wih `npm start`.
 
 ## adding routes
 
-Koa is highly modular and there is a dedicated plugin to porper manage routes on it.
+Koa is highly modular and there is a dedicated plugin to proper manage routes on it.
 
 - Install [koa-router](https://github.com/koajs/router):
 
@@ -630,7 +630,7 @@ Kill nodemon process because dynamic loading occurs at startup.
 
 the output should be something like this:
 
-```
+```bash
 /usr/bin/npm run dev
 
 > simple-roadmap@1.0.0 dev
@@ -645,3 +645,9 @@ database is sample
 http://localhost:3000
 EXTRA_CONFIG is xpto
 ```
+
+## Setup CI on version control provider
+
+Let's use gitlab, for GitHub check
+[these](https://github.com/sombriks/simple-knex-koa-example)
+[examples](https://github.com/sombriks/sample-testable-code).
