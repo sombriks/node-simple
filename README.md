@@ -2,6 +2,10 @@
 
 We're performing interactive steps adding small things one at a time!
 
+- [original gist](https://gist.github.com/sombriks/4e17e8035f72cdb2656e26b604499744)
+- [repo on github](https://github.com/sombriks/node-simple)
+- [repo on gitlab](https://gitlab.com/sombriks/node-simple)
+
 ## requirements
 
 - node 18
@@ -418,10 +422,9 @@ Then add a test:coverage script on `package.json`:
   "dev": "nodemon index.mjs"
 }
 //...
-``` 
+```
 
 And run it:
-
 
 ```bash
 npm run test:coverage
@@ -609,7 +612,7 @@ scripts in `package.json` to perform dynamic loading:
   "dev": "nodemon -r dotenv-flow/config index.mjs"
 }
 //...
-``` 
+```
 
 Check if it is working with this change in `index.mjs`:
 
