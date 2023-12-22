@@ -675,8 +675,31 @@ Now whenever a push is made, gitlab runs the tests.
 - Visit <https://console.cloud.google.com/run> and create a service
 - Authorize GitHub (no gitlab, too bad!)
 - Select the repository
+- Fill the resto of the options, it's pretty straightforward
+- Updates on every git push
+- [Has a free tier](https://cloud.google.com/run/pricing)
 
-Cloud Run will detect the rest for you.
 [Live in less than 5 minutes](https://node-simple-f24wxjc6wa-uc.a.run.app/todos)
 
-Updates every commit.
+## Run as serverless application on Digital Ocean App Platform
+
+- Visit <https://cloud.digitalocean.com/apps>
+- Authorize Github or Gitlab
+- Select the repository
+- Updates on every git push
+- Costs **12 USD** [the cheapest plan backend capable](https://docs.digitalocean.com/products/app-platform/details/pricing/)
+
+## Run as serverless application on Heroku
+
+- Visit <https://dashboard.heroku.com>
+- Authorize GitHub
+- Select the repository
+- Configure Automatic Deploys
+- Updates on every git push
+- **5 USD** the cheapest plan <https://www.heroku.com/pricing>
+
+[Live in less than 5 minutes](https://node-simple-bc6d772ff155.herokuapp.com/)
+
+## Further reading
+
+under construction
