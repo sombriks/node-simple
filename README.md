@@ -1,4 +1,4 @@
-# [how to provision a node service from scratch]()
+# [how to provision a node service from scratch](https://github.com/sombriks/node-simple)
 
 We're performing interactive steps adding small things one at a time!
 
