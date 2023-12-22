@@ -1,6 +1,7 @@
 # [how to provision a node service from scratch](https://github.com/sombriks/node-simple)
 
 [![Node.js CI](https://github.com/sombriks/node-simple/actions/workflows/node.js.yml/badge.svg)](https://github.com/sombriks/node-simple/actions/workflows/node.js.yml)
+[![Node.js CI](https://gitlab.com/sombriks/node-simple/badges/main/pipeline.svg)](https://gitlab.com/sombriks/node-simple/-/pipelines)
 
 We're performing interactive steps adding small things one at a time!
 
