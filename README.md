@@ -672,11 +672,8 @@ Now whenever a push is made, gitlab runs the tests.
 - Visit <https://console.cloud.google.com/run> and create a service
 - Authorize GitHub (no gitlab, too bad!)
 - Select the repository
-- Check cloudbuild.yml option
 
 Cloud Run will detect the rest for you.
 [Live in less than 5 minutes](https://node-simple-f24wxjc6wa-uc.a.run.app/todos)
 
 Updates every commit.
-
-## Run as serverless application on
