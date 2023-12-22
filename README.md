@@ -1,4 +1,4 @@
-# how to provision a node service from scratch
+# [how to provision a node service from scratch]()
 
 We're performing interactive steps adding small things one at a time!
 
