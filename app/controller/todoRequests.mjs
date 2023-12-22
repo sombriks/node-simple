@@ -7,7 +7,7 @@ import {
 } from "../service/todoService.mjs"
 
 export const listTodoRequest = async ctx => {
-  ctx.body = await listTodoService()
+  ctx.body = await listTodoService(ctx.query)
 }
 
 export const findTodoRequest = async ctx => {

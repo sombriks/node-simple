@@ -1,10 +1,10 @@
 import * as service from "./todoService.mjs"
 
-import chai, {expect} from "chai"
+import chai, { expect } from "chai"
 
 chai.should()
 
-describe("simple unit test suite", () => {
+describe("simple unit test suite (service)", () => {
 
   const message = `message ${new Date().getTime()}`
   const messageUpdated = `message ${new Date().getTime()} updated`

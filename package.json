@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive app",
+    "test": "mocha --recursive --exit app",
     "test:coverage": "c8 npm run test",
     "start": "node -r dotenv-flow/config index.mjs",
     "dev": "nodemon -r dotenv-flow/config index.mjs"

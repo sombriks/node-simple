@@ -651,3 +651,32 @@ EXTRA_CONFIG is xpto
 Let's use gitlab, for GitHub check
 [these](https://github.com/sombriks/simple-knex-koa-example)
 [examples](https://github.com/sombriks/sample-testable-code).
+
+Add the [.gitlab-ci.yml](.gitlab-ci.yml) file:
+
+```yml
+image: node:latest
+cache:
+  paths:
+    - node_modules/
+run-tests:
+  script:
+    - npm ci
+    - npm run test:coverage
+```
+
+Now whenever a push is made, gitlab runs the tests.
+
+## Run as serverless application on Google Cloud Run
+
+- Visit <https://console.cloud.google.com/run> and create a service
+- Authorize GitHub (no gitlab, too bad!)
+- Select the repository
+- Check cloudbuild.yml option
+
+Cloud Run will detect the rest for you.
+[Live in less than 5 minutes](https://node-simple-f24wxjc6wa-uc.a.run.app/todos)
+
+Updates every commit.
+
+## Run as serverless application on

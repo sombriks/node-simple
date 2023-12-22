@@ -1,7 +1,9 @@
 import { db } from "../config/db.mjs"
 
-export const listTodoService = async () =>
-  await db.values({ limit: 100 }).all()
+export const listTodoService = async (query = {}) => {
+  const { limit = 500, reverse = true } = query
+  return await db.values({ ...query, limit: parseInt(limit), reverse: "true" == `${reverse}` }).all()
+}
 
 export const findTodoService = async key =>
   await db.get(key)

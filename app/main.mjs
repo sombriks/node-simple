@@ -16,9 +16,9 @@ router.get("/status", async ctx => ctx.body = "ONLINE")
 
 router.get("/todos", listTodoRequest)
 router.get("/todos/:key", findTodoRequest)
-router.post("/todo", insertTodoRequest)
-router.put("/todo/:key", updateTodoRequest)
-router.del("/todo/:key", delTodoRequest)
+router.post("/todos", insertTodoRequest)
+router.put("/todos/:key", updateTodoRequest)
+router.del("/todos/:key", delTodoRequest)
 
 app.use(bodyParser())
 app.use(router.routes()).use(router.allowedMethods())
