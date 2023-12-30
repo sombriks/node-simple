@@ -698,7 +698,17 @@ Now whenever a push is made, gitlab runs the tests.
 - Updates on every git push
 - **5 USD** the cheapest plan <https://www.heroku.com/pricing>
 
-[Live in less than 5 minutes](https://node-simple-bc6d772ff155.herokuapp.com/)
+[Live in less than 5 minutes](https://node-simple-bc6d772ff155.herokuapp.com/todos)
+
+## Run as a serverless application on Render
+
+- Visit <https://dashboard.render.com/>
+- Authorize GitHub or GitLab
+- Select the repository
+- Updates on every git push
+- Free limited plan and **7 USD** ones if you want more than the minimum
+
+[Live in less than 5 minutes](https://node-simple.onrender.com/todos)
 
 ## Further reading
 
